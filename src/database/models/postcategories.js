@@ -6,9 +6,9 @@ const PostCategory = (sequelize, DataTypes) => {
 
   PostCategory.associate = (models) => {
     PostCategory.belongsTo(models.BlogPost,
-      { foreginKey: 'id', as: 'postId' });
+      { foreginKey: 'id', as: 'PostId' });
     PostCategory.belongsTo(models.Category,
-      { foreginKey: 'id', as: 'categoryId' });
+      { foreginKey: 'id', as: 'CategoryId' });
   };
 
   return PostCategory;
