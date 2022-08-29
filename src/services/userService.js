@@ -1,17 +1,9 @@
-const jwt = require('jsonwebtoken');
 const emailValidator = require('email-validator');
 const { User } = require('../database/models');
+const generateToken = require('../auth/generateToken');
 
 const createUser = async (newUser) => {
-  await User.create(newUser);
-  const jwtConfig = {
-    expiresIn: '7d',
-    algorithm: 'HS256',
-  };
-
-  const { email } = newUser;
-  const secret = process.env.JWT_SECRET;
-  const token = jwt.sign({ data: email }, secret, jwtConfig);
+  const token = await generateToken(newUser);
   return { status: 201, json: { token } };
 };
 
@@ -72,4 +64,16 @@ const validateNewUser = async (newUser) => {
   return response;
 };
 
-module.exports = { validateNewUser };
+const listAllUsers = async () => {
+  const allUsers = await User.findAll({
+    attributes: ['id', 'displayName', 'email', 'image'],
+  });
+  const response = {
+    status: 200,
+    json: allUsers,
+  };
+
+  return response;
+};
+
+module.exports = { validateNewUser, listAllUsers };
