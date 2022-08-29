@@ -64,7 +64,7 @@ const validateNewUser = async (newUser) => {
   return response;
 };
 
-const listAllUsers = async () => {
+const fetchAllUsers = async () => {
   const allUsers = await User.findAll({
     attributes: ['id', 'displayName', 'email', 'image'],
   });
@@ -76,4 +76,24 @@ const listAllUsers = async () => {
   return response;
 };
 
-module.exports = { validateNewUser, listAllUsers };
+const fetchSingleUser = async (id) => {
+  const user = await User.findOne({
+    attributes: ['id', 'displayName', 'email', 'image'],
+    where: { id },
+  });
+  
+  if (!user) {
+    return {
+      status: 404,
+      json: { message: 'User does not exist' },
+    };
+  }
+  const response = {
+    status: 200,
+    json: user,
+  };
+
+  return response;
+};
+
+module.exports = { validateNewUser, fetchAllUsers, fetchSingleUser };

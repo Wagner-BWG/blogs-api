@@ -1,4 +1,4 @@
-const { validateNewUser, listAllUsers } = require('../services/userService');
+const { validateNewUser, fetchAllUsers, fetchSingleUser } = require('../services/userService');
 
 const createUser = async (req, res) => {
   const newUser = req.body;
@@ -6,12 +6,17 @@ const createUser = async (req, res) => {
   return res.status(status).json(json);
 };
 
-const fetchAllUsers = async (_req, res) => {
-  console.log('chegou aqui');
-  const { status, json } = await listAllUsers();
+const listAllUsers = async (_req, res) => {
+  const { status, json } = await fetchAllUsers();
+  return res.status(status).json(json);
+};
+
+const listUniqueUser = async (req, res) => {
+  const { id } = req.params;
+  const { status, json } = await fetchSingleUser(id);
   return res.status(status).json(json);
 };
 
 const deleteUser = async (_req, res) => res.status(200).json({ message: 'delete' });
 
-module.exports = { createUser, fetchAllUsers, deleteUser };
+module.exports = { createUser, listAllUsers, listUniqueUser, deleteUser };
