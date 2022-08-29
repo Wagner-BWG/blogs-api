@@ -18,7 +18,7 @@ const validateToken = async (req, res, next) => {
     if (!user) {
       return res
         .status(401)
-        .json({ message: 'Erro ao procurar usuário do token.' });
+        .json({ message: 'No user associated with this token' });
     }
 
     req.user = user;
