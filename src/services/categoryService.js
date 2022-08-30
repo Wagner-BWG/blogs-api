@@ -8,4 +8,9 @@ const writeNewCategory = async (name) => {
   return { status: 201, json: { id: categoryList.length, name } };
 };
 
-module.exports = { writeNewCategory };
+const listAllCategories = async () => {
+  const categoryList = await Category.findAll();
+  return { status: 200, json: categoryList };
+};
+
+module.exports = { writeNewCategory, listAllCategories };
