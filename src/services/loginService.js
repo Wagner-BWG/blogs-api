@@ -1,7 +1,8 @@
-const jwt = require('jsonwebtoken');
+// const jwt = require('jsonwebtoken');
 const { User } = require('../database/models');
+const generateToken = require('../auth/generateToken');
 
-const secret = process.env.JWT_SECRET;
+// const secret = process.env.JWT_SECRET;
 
 const findUser = async (email) => {
   const response = await User.findAll({
@@ -25,12 +26,14 @@ const login = async (email, password) => {
     return { status: 400, json: { message: 'Invalid fields' } };
   }
 
-  const jwtConfig = {
-    expiresIn: '7d',
-    algorithm: 'HS256',
-  };
+  const token = await generateToken(email);
 
-  const token = jwt.sign({ data: email }, secret, jwtConfig);
+  // const jwtConfig = {
+  //   expiresIn: '7d',
+  //   algorithm: 'HS256',
+  // };
+
+  // const token = jwt.sign({ data: email }, secret, jwtConfig);
   
   return { status: 200, json: { token } };
 };

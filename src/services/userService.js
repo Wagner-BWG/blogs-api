@@ -3,7 +3,9 @@ const { User } = require('../database/models');
 const generateToken = require('../auth/generateToken');
 
 const createUser = async (newUser) => {
-  const token = await generateToken(newUser);
+  await User.create(newUser);
+  const { email } = newUser;
+  const token = await generateToken(email);
   return { status: 201, json: { token } };
 };
 
