@@ -1,5 +1,5 @@
 const { validateInputFields,
-  validateCategory, composeNewPost } = require('../services/postService');
+  validateCategory, composeNewPost, fetchAllPosts } = require('../services/postService');
 
 const newPost = async (req, res) => {
   const { title, content, categoryIds } = req.body;
@@ -20,4 +20,9 @@ const newPost = async (req, res) => {
   return res.status(status).json(json);
 };
 
-module.exports = { newPost };
+const getAllPosts = async (req, res) => {
+  const json = await fetchAllPosts();
+  return res.status(200).json(json);
+};
+
+module.exports = { newPost, getAllPosts };

@@ -1,4 +1,4 @@
-const { BlogPost, Category, PostCategory } = require('../database/models');
+const { BlogPost, Category, PostCategory, User } = require('../database/models');
 
 const validateInputFields = (title, content, categoryIds) => {
   const tests = [title, content, categoryIds];
@@ -26,4 +26,23 @@ const composeNewPost = async (user, title, content, categoryIds) => {
   return { status: 201, json: newPost };
 };
 
-module.exports = { validateInputFields, validateCategory, composeNewPost };
+const fetchAllPosts = async () => {
+  const allPosts = await BlogPost.findAll({
+    attributes: ['id', 'title', 'content', 'userId', 'published', 'updated'],
+    include: [
+      {
+        model: User,
+        as: 'user',
+        attributes: ['id', 'displayName', 'email', 'image'],
+      },
+      // {
+      //   model: Category,
+      //   as: 'categories',
+      //   attributes: ['id', 'name'],
+      // },
+    ],
+  });
+  return allPosts;
+};
+
+module.exports = { validateInputFields, validateCategory, composeNewPost, fetchAllPosts };
