@@ -7,7 +7,7 @@ const {
 } = require('./controllers/userController');
 const { createCategory, getAllCategories } = require('./controllers/categoryController');
 const { 
-  newPost, getAllPosts, getSinglePost, editUserPost,
+  newPost, getAllPosts, getSinglePost, editUserPost, searchForPost,
 } = require('./controllers/postController');
 
 const port = process.env.API_PORT || 3000;
@@ -28,6 +28,7 @@ app.get('/categories', validateToken, getAllCategories);
 
 app.post('/post', validateToken, newPost);
 app.get('/post', validateToken, getAllPosts);
+app.get('/post/search', validateToken, searchForPost);
 app.get('/post/:id', validateToken, getSinglePost);
 app.put('/post/:id', validateToken, editUserPost);
 

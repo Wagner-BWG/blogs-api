@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { BlogPost, Category, PostCategory, User } = require('../database/models');
 
 const validateInputFields = (title, content, categoryIds) => {
@@ -67,6 +68,21 @@ const editPost = async (id, title, content) => {
   });
 };
 
+const searchPosts = async (query) => {
+  const posts = await BlogPost.findAll({
+    where: {
+      [Op.or]: [{ title: { [Op.like]: query } }, { content: { [Op.like]: query } }],
+    },
+  });
+  return { status: 200, json: posts };
+};
+
 module.exports = {
-  validateInputFields, validateCategory, composeNewPost, fetchAllPosts, fetchSinglePost, editPost,
+  validateInputFields,
+  validateCategory,
+  composeNewPost,
+  fetchAllPosts,
+  fetchSinglePost,
+  editPost,
+  searchPosts,
 };

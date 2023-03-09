@@ -1,5 +1,5 @@
 const { validateInputFields, validateCategory, composeNewPost,
-  fetchAllPosts, fetchSinglePost, editPost } = require('../services/postService');
+  fetchAllPosts, fetchSinglePost, editPost, searchPosts } = require('../services/postService');
 
 const newPost = async (req, res) => {
   const { title, content, categoryIds } = req.body;
@@ -47,4 +47,11 @@ const editUserPost = async (req, res) => {
   return res.status(401).json({ message: 'Unauthorized user' });
 };
 
-module.exports = { newPost, getAllPosts, getSinglePost, editUserPost };
+const searchForPost = async (req, res) => {
+  const { q } = req.query;
+  const query = `%${q}%`;
+  const { status, json } = await searchPosts(query);
+  return res.status(status).json(json);
+};
+
+module.exports = { newPost, getAllPosts, getSinglePost, editUserPost, searchForPost };
