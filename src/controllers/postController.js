@@ -1,5 +1,5 @@
-const { validateInputFields,
-  validateCategory, composeNewPost, fetchAllPosts } = require('../services/postService');
+const { validateInputFields, validateCategory, composeNewPost,
+  fetchAllPosts, fetchSinglePost, editPost } = require('../services/postService');
 
 const newPost = async (req, res) => {
   const { title, content, categoryIds } = req.body;
@@ -25,4 +25,26 @@ const getAllPosts = async (req, res) => {
   return res.status(200).json(json);
 };
 
-module.exports = { newPost, getAllPosts };
+const getSinglePost = async (req, res) => {
+  const { id } = req.params;
+  const { status, json } = await fetchSinglePost(id);
+  return res.status(status).json(json);
+};
+
+const editUserPost = async (req, res) => {
+  const { id: userId } = req.user;
+  const { id: postId } = req.params;
+  const { title, content } = req.body;
+  if (!title || !content) {
+    return res.status(400).json({ message: 'Some required fields are missing' });  
+  }
+  const { json: post } = await fetchSinglePost(postId);
+  if (userId === post.userId) {
+    await editPost(postId, title, content);
+    const { json: editedPost } = await fetchSinglePost(postId);
+    return res.status(200).json({ editedPost });
+  }
+  return res.status(401).json({ message: 'Unauthorized user' });
+};
+
+module.exports = { newPost, getAllPosts, getSinglePost, editUserPost };

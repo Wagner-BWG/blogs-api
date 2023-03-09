@@ -35,14 +35,38 @@ const fetchAllPosts = async () => {
         as: 'user',
         attributes: ['id', 'displayName', 'email', 'image'],
       },
-      // {
-      //   model: Category,
-      //   as: 'categories',
-      //   attributes: ['id', 'name'],
-      // },
     ],
   });
   return allPosts;
 };
 
-module.exports = { validateInputFields, validateCategory, composeNewPost, fetchAllPosts };
+const fetchSinglePost = async (id) => {
+  const post = await BlogPost.findOne({
+    where: { id },
+    attributes: ['id', 'title', 'content', 'userId', 'published', 'updated'],
+    include: [
+      {
+        model: User,
+        as: 'user',
+        attributes: ['id', 'displayName', 'email', 'image'],
+      },
+    ],
+  });
+  if (!post) {
+    return { status: 404, json: { message: 'Post does not exist' },
+    };
+  }
+  return { status: 200, json: post };
+};
+
+const editPost = async (id, title, content) => {
+  await BlogPost.update({
+    title, content,
+  }, {
+    where: { id },
+  });
+};
+
+module.exports = {
+  validateInputFields, validateCategory, composeNewPost, fetchAllPosts, fetchSinglePost, editPost,
+};

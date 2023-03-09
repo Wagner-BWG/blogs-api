@@ -6,12 +6,12 @@ const {
   createUser, listAllUsers, listUniqueUser, deleteUser,
 } = require('./controllers/userController');
 const { createCategory, getAllCategories } = require('./controllers/categoryController');
-const { newPost, getAllPosts } = require('./controllers/postController');
+const { 
+  newPost, getAllPosts, getSinglePost, editUserPost,
+} = require('./controllers/postController');
 
-// não remova a variável `API_PORT` ou o `listen`
 const port = process.env.API_PORT || 3000;
 
-// não remova esse endpoint
 app.get('/', (_request, response) => {
   response.send();
 });
@@ -28,5 +28,7 @@ app.get('/categories', validateToken, getAllCategories);
 
 app.post('/post', validateToken, newPost);
 app.get('/post', validateToken, getAllPosts);
+app.get('/post/:id', validateToken, getSinglePost);
+app.put('/post/:id', validateToken, editUserPost);
 
 app.listen(port, () => console.log('ouvindo porta', port));
