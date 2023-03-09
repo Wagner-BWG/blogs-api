@@ -42,7 +42,7 @@ const editUserPost = async (req, res) => {
   if (userId === post.userId) {
     await editPost(postId, title, content);
     const { json: editedPost } = await fetchSinglePost(postId);
-    return res.status(200).json({ editedPost });
+    return res.status(200).json(editedPost);
   }
   return res.status(401).json({ message: 'Unauthorized user' });
 };

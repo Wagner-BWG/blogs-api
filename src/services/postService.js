@@ -36,6 +36,7 @@ const fetchAllPosts = async () => {
         as: 'user',
         attributes: ['id', 'displayName', 'email', 'image'],
       },
+      { model: Category, as: 'categories', through: { attributes: [] } },
     ],
   });
   return allPosts;
@@ -46,11 +47,8 @@ const fetchSinglePost = async (id) => {
     where: { id },
     attributes: ['id', 'title', 'content', 'userId', 'published', 'updated'],
     include: [
-      {
-        model: User,
-        as: 'user',
-        attributes: ['id', 'displayName', 'email', 'image'],
-      },
+      { model: User, as: 'user', attributes: ['id', 'displayName', 'email', 'image'] },
+      { model: Category, as: 'categories', through: { attributes: [] } },
     ],
   });
   if (!post) {
@@ -73,6 +71,11 @@ const searchPosts = async (query) => {
     where: {
       [Op.or]: [{ title: { [Op.like]: query } }, { content: { [Op.like]: query } }],
     },
+    attributes: ['id', 'title', 'content', 'userId', 'published', 'updated'],
+    include: [
+      { model: User, as: 'user', attributes: ['id', 'displayName', 'email', 'image'] },
+      { model: Category, as: 'categories', through: { attributes: [] } },
+    ],
   });
   return { status: 200, json: posts };
 };
