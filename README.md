@@ -8,7 +8,11 @@ It also contains a database directory where Sequelize ORM was used to create a l
 
 *This project was part of [Trybe](https://github.com/betrybe)'s web development course and their instruction team provided the dockerization (Dockerfile and docker-compose.yml) and the seeders and the connection config for the database.*
 
-## To run this application locally:
+## How to use:
+
+This application is hosted at a virtual server at ***AWS EC2***. You can use an API Client (such as Insomnia or Postman) to make requests to the server at http://3.21.122.82:3000/ followed by the endpoint. (e.g. http://3.21.122.82:3000/user )
+
+<details><summary>To run this application locally:</summary>
 
 Clone this repository and in its root folder execute the command `docker-compose up -d --build` to start up the dockerized app.
 (Make sure your ports 3000 and 3306 are free as these are used by the containers)
@@ -21,7 +25,8 @@ Use `npm run prestart` to create the DB and make it's Sequelize migrations. Then
 (NOTE: if any error occurs, try using `npm run drop` to delete the DB than retry the process from `npm run prestsart` then `npm run seed`)
 
 After that, use `npm start` to run the application.
-Use an API Client (such as Insomnia or Postman) to make requests to the server at your port 3000 (http://localhost:3000)
+Use an API Client (such as Insomnia or Postman) to make requests to the server at your local port 3000 (e.g. http://localhost:3000/user )
+</details>
 
 ### Endpoints:
 
