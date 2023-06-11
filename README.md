@@ -12,7 +12,7 @@ It also contains a database directory where Sequelize ORM was used to create a l
 
 This application is hosted at a virtual server at ***AWS EC2***. You can use an API Client (such as Insomnia or Postman) to make requests to the server at http://3.21.122.82:3000/ followed by the endpoint. (e.g. http://3.21.122.82:3000/user )
 
-<details><summary>To run this application locally:</summary>
+<details><summary>Instructions to run this application locally.</summary>
 
 Clone this repository and in its root folder execute the command `docker-compose up -d --build` to start up the dockerized app.
 (Make sure your ports 3000 and 3306 are free as these are used by the containers)
