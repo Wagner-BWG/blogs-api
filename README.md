@@ -10,23 +10,21 @@ It also contains a database directory where Sequelize ORM was used to create a l
 
 ## How to use:
 
-This application is hosted at a virtual server at ***AWS EC2***. You can use an API Client (such as Insomnia or Postman) to make requests to the server at http://3.21.122.82:3000/ followed by the endpoint. (e.g. http://3.21.122.82:3000/user )
+This application is not currently hosted online. But it can be ran locally as long as you have docker engine on your machine. To do so, follow these instructions:
 
-<details><summary>Instructions to run this application locally.</summary>
-
-Clone this repository and in its root folder execute the command `docker-compose up -d --build` to start up the dockerized app.
+* Clone this repository and in its root folder execute the command `docker-compose up` to start up the dockerized app.
 (Make sure your ports 3000 and 3306 are free as these are used by the containers)
 
-Access the blog_api command line with the command: `docker exec -it blogs_api bash`
+* Access the blog_api command line with the command: `docker exec -it blogs_api bash` or using Docker Desktop.
 
-Inside the container, install de dependencies with `npm install`
+* Inside the container, install de dependencies with `npm install`
 
-Use `npm run prestart` to create the DB and make it's Sequelize migrations. Then use `npm run seed` to insert data into these DB.
+* Use `npm run prestart` to create the DB and make it's Sequelize migrations. Then use `npm run seed` to insert data into these DB.
 (NOTE: if any error occurs, try using `npm run drop` to delete the DB than retry the process from `npm run prestsart` then `npm run seed`)
 
-After that, use `npm start` to run the application.
-Use an API Client (such as Insomnia or Postman) to make requests to the server at your local port 3000 (e.g. http://localhost:3000/user )
-</details>
+* After that, use `npm start` to run the application.
+
+* Use an API Client (such as Insomnia or Postman) to make requests to the server endpoints at your local port 3000 (e.g. http://localhost:3000/user )
 
 ### Endpoints:
 
@@ -54,7 +52,7 @@ And you'll receive a status code 201 and an access token such as:
 }
 ```
 
-**IMPORTANT:** The `displayName` must be at least 8 characters long, the `password` must be at least 6 characters long adn the `email` must be in the format `<prefix@domain>`. Otherwise you will receive a status code 400  and error message explaining the error.
+**IMPORTANT:** The `displayName` must be at least 8 characters long, the `password` must be at least 6 characters long and the `email` must be in the format `<prefix@domain>`. Otherwise you will receive a status code 400  and error message explaining which of the is invalid.
 Each email can only be registered in the database once. If you try to create two users with the same email, you will receive a status code 409 message saying this `User already registered`.
 </details>
 
